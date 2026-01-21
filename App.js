@@ -7,7 +7,8 @@ import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/style";
-
+import IconButton from "./ui/iconButton";
+import { StyleSheet } from "react-native";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
@@ -19,6 +20,14 @@ function ExpensesOverview() {
         headerTintColor: "white ",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary50 },
         tabBarActiveTintColor: GlobalStyles.colors.primary700,
+        headerRight:()=>(<IconButton
+          icon="add"
+          size={24}
+          color="white"
+          onPress={() => {
+            console.log("Pressed");
+          }}
+        />),  
       }}
     >
       <BottomTabs.Screen
@@ -66,3 +75,4 @@ export default function App() {
     </>
   );
 }
+const styles = StyleSheet.create({});

@@ -7,7 +7,7 @@ function ExpensesSummary({ expenses, periodName }) {
 
   return (
     <View style={style.container}>
-      <Text>{periodName}</Text>
+      <Text style={style.period}>{periodName}</Text>
       <Text style={style.amount}>$ {expensesSum.toFixed(2)}</Text>
     </View>
   );
@@ -16,12 +16,22 @@ export default ExpensesSummary;
 
 const style = StyleSheet.create({
   container: {
-    padding: 16,
-    margin: 20,
-    backgroundColor: GlobalStyles.colors.accent500,
-    borderRadius: 8,
+    padding: 20,
+    margin: 18,
+    backgroundColor: GlobalStyles.colors.primary50,
+    borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  amount: {},
+  period: {
+    fontSize: 16,
+    fontWeight: "bold",
+    fontFamily: "serif",
+    color: GlobalStyles.colors.primary500,
+  },
+  amount: {
+    color: GlobalStyles.colors.primary500,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
