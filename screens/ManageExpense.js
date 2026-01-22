@@ -42,7 +42,7 @@ export default function ManageExpense({ route, navigation }) {
   }
   return (
     <View style={styles.container}>
-      <ExpenseForm />
+      <ExpenseForm  />
       <View style={styles.Button}>
         <View>
           <Button mode="flat" onPress={cancelHandler}>
@@ -73,7 +73,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    alignSelf: "center",
   },
+   
   Button: {
     flexDirection: "row",
     justifyContent: "space-between",
