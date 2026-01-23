@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#fff",
     padding: 6,
-    width: '100%',
+    width: "100%",
     borderRadius: 6,
     fontSize: 18,
     borderWidth: 1,
     borderColor: "#ccc",
   },
-  
+
   inputMultiline: {
     // minWidth: "100%",
     // height: 200,
@@ -48,8 +48,10 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     backgroundColor: "#fff",
     textAlign: "left",
-    minWidth: "90%",
+    width: 330,
     textAlignVertical: "top",
     marginBottom: 26,
+    overflow: "hidden",
+
   },
 });

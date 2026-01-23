@@ -9,7 +9,9 @@ export default function ManageExpense({ route, navigation }) {
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
   const expensesCtx = useContext(ExpensesContext);
-
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense",
@@ -23,38 +25,23 @@ export default function ManageExpense({ route, navigation }) {
   function cancelHandler() {
     navigation.goBack();
   }
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
     if (isEditing) {
-      expensesCtx.updateExpense(editedExpenseId, {
-        description: "Test!!!!",
-        amount: 29.99,
-        date: new Date("2026-01-20"),
-      });
+      expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      expensesCtx.addExpense({
-        // id: Math.random().toString(),
-        description: "Test",
-        amount: 29.99,
-        date: new Date("2026-01-20"),
-      });
+      expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
   }
   return (
     <View style={styles.container}>
-      <ExpenseForm  />
-      <View style={styles.Button}>
-        <View>
-          <Button mode="flat" onPress={cancelHandler}>
-            Cancel
-          </Button>
-        </View>
-        <View>
-          <Button onPress={confirmHandler}>
-            {isEditing ? "Update" : "Add"}
-          </Button>
-        </View>
-      </View>
+      <ExpenseForm
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+        defaultValues={selectedExpense}
+      />
+
       <View style={styles.deleteContainer}>
         {isEditing && (
           <IconButton
@@ -73,21 +60,28 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     alignItems: "center",
-    justifyContent: "center",
+    // alignContent:'space-evenly',
+    // justifyContent: "center",
     width: "100%",
-    alignSelf: "center",
+    height: "100%",
+    // alignSelf: "center",
   },
-   
+
   Button: {
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   deleteContainer: {
-    marginTop: 16,
+    flex: 1,
+    marginTop: 200,
     paddingTop: 8,
     borderTopWidth: 2,
     minWidth: "80%",
+    height: "15%",
+    alignSelf: "center",
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: "center",
+    justifyContent: "space-between",
   },
 });
