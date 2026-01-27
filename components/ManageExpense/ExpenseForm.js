@@ -1,4 +1,4 @@
-import { Alert, View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useState } from "react";
 import Input from "./Input";
 import Button from "../UI/Button";

@@ -1,10 +1,11 @@
-import { useLayoutEffect, useContext } from "react";
+import { useState, useLayoutEffect, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
 import { ExpensesContext } from "../store/expenses-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
-import { storeExpense } from "../utils.js/https";
+import { storeExpense, updateExpense, deleteExpense } from "../utils.js/https";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 export default function ManageExpense({ route, navigation }) {
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
@@ -12,27 +13,36 @@ export default function ManageExpense({ route, navigation }) {
   const selectedExpense = expensesCtx.expenses.find(
     (expense) => expense.id === editedExpenseId
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense",
     });
   }, [navigation, isEditing]);
 
-  function deleteExpenseHandler() {
-    navigation.goBack();
+  async function deleteExpenseHandler() {
+    setIsSubmitting(true);
+    await deleteExpense(editedExpenseId);
+    // setIsSubmitting(false )
     expensesCtx.deleteExpense(editedExpenseId);
+    navigation.goBack();
   }
   function cancelHandler() {
     navigation.goBack();
   }
-  function confirmHandler(expenseData) {
+  async function confirmHandler(expenseData) {
+    setIsSubmitting(true);
     if (isEditing) {
+      await updateExpense(editedExpenseId, expenseData);
       expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      storeExpense(expenseData);
-      expensesCtx.addExpense(expenseData);
+      const id = await storeExpense(expenseData);
+      expensesCtx.addExpense({ ...expenseData, id: id });
     }
     navigation.goBack();
+  }
+  if (isSubmitting) {
+    return <LoadingOverlay />;
   }
   return (
     <View style={styles.container}>
