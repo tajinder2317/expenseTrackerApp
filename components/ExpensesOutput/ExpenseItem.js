@@ -33,10 +33,12 @@ const styles = StyleSheet.create({
     opacity: 0.75,
   },
   expenseItem: {
+    maxHeight: 130,
     padding: Platform.OS === "ios" ? 20 : 12,
     marginVertical: 8,
     backgroundColor: "white",
     flexDirection: "row",
+    flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 12,
@@ -68,6 +70,7 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === "ios" ? 14 : 16,
     marginBottom: 4,
     fontWeight: "bold",
+    maxWidth: "70%",
   },
   amount: {
     color: "black",
